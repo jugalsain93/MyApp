@@ -102,8 +102,11 @@ login() {
         this.submitting = false;
       },
       error: (err) => {
+        debugger;
+         this.submitting = false;
+         this.cdr.detectChanges(); 
         this.notify.show(this.extractErrorMessage(err), 'error');
-        this.submitting = false;
+       
       }
     });
   }
