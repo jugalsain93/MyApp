@@ -1,0 +1,41 @@
+<div class="sidebar">
+  <div class="sidebar-header">
+    My Application
+  </div>
+
+  <div class="sidebar-menu">
+    
+<nav class="sidebar-sticky sidebar" *ngIf="isAuthenticated">
+  <ul class="nav flex-column">
+
+    <!-- ✅ Home only once -->
+    <li class="nav-item">
+      <a class="nav-link" [routerLink]="'/dashboard'">
+        Home
+      </a>
+    </li>
+
+    <!-- Loop starts here -->
+    <li *ngFor="let menu of mainMenus" class="nav-item">
+      <a class="nav-link" 
+         (click)="toggleMenu(menu.id)" 
+         [routerLink]="menu.link !== '#' ? menu.link : null"
+         [routerLinkActive]="'active'">
+        {{ menu.menuName }}
+        <span style="float: right;">{{ collapsedMenus[menu.id] ? '+' : '-' }}</span>
+      </a>
+
+      <ul *ngIf="childMenus[menu.id] && !collapsedMenus[menu.id]" class="nav flex-column ms-3">
+        <li *ngFor="let child of childMenus[menu.id]" class="nav-item">
+          <a class="nav-link" [routerLink]="normalizeLink(child.link)" routerLinkActive="active">
+            {{ child.menuName }}
+          </a>
+        </li>
+      </ul>
+    </li>
+
+  </ul>
+</nav>
+  </div>
+</div>
+

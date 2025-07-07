@@ -1,0 +1,107 @@
+<!-- src/app/features/dashboard/pages/dashboard-home/dashboard-home.html -->
+<div class="container mt-3">
+  <form (ngSubmit)="onSearch()">
+    <div class="row mb-3">
+
+      <!-- Region -->
+      <div class="col-md-3">
+        <label>Region</label>
+        <select class="form-control" [(ngModel)]="objFilter.regionId" name="regionId"
+          (change)="onRegionChange($event)">
+          <option [value]="0">All</option>
+          <option *ngFor="let r of regionList" [value]="r.id">{{ r.name }}</option>
+        </select>
+      </div>
+
+      <!-- Country -->
+      <div class="col-md-3">
+        <label>Country</label>
+        <select class="form-control" [(ngModel)]="objFilter.countryId" name="countryId">
+          <option [value]="0">All</option>
+          <option *ngFor="let c of countryList" [value]="c.id">{{ c.name }}</option>
+        </select>
+      </div>
+
+      <!-- Membership Status -->
+      <div class="col-md-3">
+        <label>Membership Status</label>
+        <select class="form-control" [(ngModel)]="objFilter.membershipStatus" name="membershipStatus">
+          <option value="">All</option>
+          <option value="P">Pending</option>
+          <option value="A">Completed</option>
+        </select>
+      </div>
+
+      <!-- Membership Type -->
+      <div class="col-md-3">
+        <label>Membership Type</label>
+        <select class="form-control" [(ngModel)]="objFilter.membershipType" name="membershipType">
+          <option value="">All</option>
+          <option value="BlockRadiance">BlockRadiance</option>
+          <option value="Event">Event</option>
+          <option value="HealthRadar">HealthVaultRadar</option>
+          <option value="Volunteer">Volunteer</option>
+          <option value="Recycling">Recycling Agent</option>
+          <option value="BlockRadiance-Sustainability">PlanetSustain</option>
+        </select>
+      </div>
+
+      <!-- Gender -->
+      <div class="col-md-3">
+        <label>Gender</label>
+        <select class="form-control" [(ngModel)]="objFilter.gender" name="gender">
+          <option value="">All</option>
+          <option *ngFor="let g of genderList" [value]="g.name">{{ g.name }}</option>
+        </select>
+      </div>
+
+      <!-- Age Group -->
+      <div class="col-md-3">
+        <label>Age Group</label>
+        <select class="form-control" [(ngModel)]="objFilter.ageGroupId" name="ageGroupId">
+          <option [value]="0">All</option>
+          <option *ngFor="let a of ageGroupList" [value]="a.id">{{ a.name }}</option>
+        </select>
+      </div>
+
+      <!-- Date Range -->
+      <div class="col-md-4">
+        <label>Date Range</label>
+        <div class="d-flex">
+          <input class="form-control me-1" [(ngModel)]="objFilter.fromDate" name="fromDate" type="date" />
+          <span class="mx-1">to</span>
+          <input class="form-control me-1" [(ngModel)]="objFilter.toDate" name="toDate" type="date" />
+        </div>
+      </div>
+
+      <!-- Search Button -->
+      <div class="col-md-2 d-flex justify-content-end align-items-end">
+        <button type="submit" class="btn btn-primary w-90" >Search</button>
+      </div>
+      <div class="clearfix"></div>
+
+    </div>
+  </form>
+
+  <!-- Dashboard Summary Grid -->
+  <!-- <div class="row">
+    <div class="col-md-2 mb-3" *ngFor="let item of dashboardItems">
+      <div class="bg-primary text-white p-3 text-center rounded">
+        <h5>{{ item.name }}</h5>
+        <div>{{ item.id }}</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<pre>{{ dashboardItems | json }}</pre> -->
+<div class="dashboard-grid" *ngIf="dashboardItems.length > 0; else noData">
+  <div class="dashboard-card" *ngFor="let item of dashboardItems">
+    <div class="card-title">{{ item.name }}</div>
+    <div class="card-value">{{ item.id }}</div>
+  </div>
+</div>
+
+<ng-template #noData>
+  <div class="no-data-message">No dashboard data available.</div>
+</ng-template>

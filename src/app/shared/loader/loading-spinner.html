@@ -1,0 +1,9 @@
+<!-- Full-screen loader -->
+<div *ngIf="(loadingService.fullPageLoading$ | async)" class="spinner-overlay">
+  <div class="spinner">Loading Application</div>
+</div>
+
+<!-- Content loader, only when full screen is off -->
+<div *ngIf="(loadingService.contentLoading$ | async) && !(loadingService.fullPageLoading$ | async)" class="spinner-content">
+  <div class="spinner">Loading Page</div>
+</div>

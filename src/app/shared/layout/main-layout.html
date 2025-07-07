@@ -1,0 +1,17 @@
+<div class="layout-wrapper">
+  <app-header></app-header>
+
+  <div class="d-flex">
+    <app-sidebar class="sidebar"></app-sidebar>
+
+    <main class="main-content">
+      <div class="main-content-inner">
+        <!-- ✅ This spinner will cover ONLY content area, not sidebar/header -->
+        <app-loading-spinner></app-loading-spinner>
+
+        <router-outlet></router-outlet>
+      </div>
+    </main>
+  </div>
+</div>
+

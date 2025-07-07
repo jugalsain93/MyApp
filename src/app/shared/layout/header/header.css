@@ -1,0 +1,64 @@
+.header-bar {
+  height: 70px;
+  background-color: rgb(223, 207, 207); /* Off-white */
+  border-bottom: 1px solid #dee2e6;
+  padding: 0 1.5rem;
+  display: flex;
+  align-items: center;
+  position: relative;
+  margin-left: 280px; /* ✅ Shifts right after sidebar */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  z-index: 1000;
+}
+
+
+/* Left: App Name */
+.header-left {
+  flex: 1;
+  z-index: 2;
+  font-size: 1.25rem;
+}
+
+/* Center Logo */
+.header-logo-wrapper {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+}
+
+.header-logo {
+  max-height: 55px;
+  width: auto;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.header-logo:hover {
+  transform: translateX(-50%) scale(1.05);
+}
+
+/* Right: Buttons */
+.header-right {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  z-index: 2;
+}
+
+.header-right .btn {
+  font-size: 0.875rem;
+  padding: 0.4rem 0.75rem;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.header-right .btn-outline-primary:hover {
+  background-color: #0d6efd;
+  color: #fff;
+}
+
+.header-right .btn-outline-danger:hover {
+  background-color: #dc3545;
+  color: #fff;
+}

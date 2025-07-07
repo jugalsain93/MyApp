@@ -1,0 +1,51 @@
+/* Dashboard Layout */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+/* Card Style */
+.dashboard-card {
+  background: linear-gradient(135deg, #007bff, #0056b3);
+  color: white;
+  padding: 1.2rem 1rem;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* Text Styling */
+.card-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.card-value {
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+/* Empty Message */
+.no-data-message {
+  text-align: center;
+  padding: 2rem;
+  color: #999;
+  font-style: italic;
+  font-size: 1.1rem;
+}
+.header-center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+  text-align: center;
+}

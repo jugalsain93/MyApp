@@ -1,0 +1,188 @@
+<div class="mb-3">
+  <button class="btn btn-primary me-2" (click)="setMode('list')">Membership List</button>
+  <button class="btn btn-success me-2" (click)="setMode('new')">New Membership</button>
+</div>
+
+<!-- 🔍 Filter Form -->
+<form [formGroup]="filterForm" (ngSubmit)="onFilterSubmit()" class="row g-3 mb-4" *ngIf="mode === 'list'">
+  <div class="col-md-3">
+    <label>Region Name</label>
+   <ng-container *ngIf="profile.userLevelId > 1; else regionSelect">
+
+      <input class="form-control" [value]="profile.regionName" disabled />
+    </ng-container>
+    <ng-template #regionSelect>
+      <select class="form-control" formControlName="regionId" (change)="onRegionChange()">
+        <option value="0">All</option>
+        <option *ngFor="let r of regionKeyValues" [value]="r.id">{{ r.name }}</option>
+      </select>
+    </ng-template>
+  </div>
+
+  <div class="col-md-3">
+    <label>Country Name</label>
+    <ng-container *ngIf="profile.userLevelId > 2; else countrySelect">
+      <input class="form-control" [value]="profile.countryName" disabled />
+    </ng-container>
+    <ng-template #countrySelect>
+      <select class="form-control" formControlName="countryId">
+        <option value="0">All</option>
+        <option *ngFor="let c of countryList" [value]="c.id">{{ c.name }}</option>
+      </select>
+    </ng-template>
+  </div>
+
+  <div class="col-md-3">
+    <label>Business Partner</label>
+    <input class="form-control" formControlName="partnerCompanyName" />
+  </div>
+
+  <div class="col-md-3">
+    <label>Membership Id</label>
+    <input class="form-control" formControlName="membershipId" />
+  </div>
+
+  <div class="col-md-3">
+    <label>Status</label>
+    <select class="form-control" formControlName="status">
+      <option value="">Select</option>
+      <option value="P">Pending</option>
+      <option value="S">Form-Submitted</option>
+      <option value="A">Active</option>
+      <option value="D">De-Activated</option>
+    </select>
+  </div>
+
+  <div class="col-md-3">
+    <label>Reference Source</label>
+    <input class="form-control" formControlName="source" />
+  </div>
+
+  <div class="col-md-4">
+    <label>Date Range</label>
+    <div class="d-flex gap-2">
+      <input type="date" class="form-control" formControlName="fromDate" />
+      <span class="align-self-center">to</span>
+      <input type="date" class="form-control" formControlName="toDate" />
+    </div>
+  </div>
+
+  <div class="col-md-2 d-flex align-items-end gap-2">
+    <button type="submit" class="btn btn-primary">Search</button>
+    <button type="button" class="btn btn-success" (click)="DownloadExcelFile()">Download</button>
+  </div>
+</form>
+
+<!-- 📋 Membership List -->
+<div *ngIf="mode === 'list'">
+  <table class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>MembershipId</th>
+        <th>Company</th>
+        <th>Duration</th>
+        <th>Plan</th>
+        <th>Source</th>
+        <th>MEM Date</th>
+        <th>Exp Date</th>
+        <th>Amount</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of listItem">
+        <td>{{ item.membershipId }}</td>
+        <td>{{ item.companyName }}</td>
+        <td>{{ item.duration }} {{ item.durationUnit }}</td>
+        <td>{{ item.subscriptionType }}</td>
+        <td>{{ item.source }}</td>
+        <td>{{ item.membershipDate }}</td>
+        <td>{{ item.membershipExpiryDate }}</td>
+        <td class="text-end">{{ item.transactionAmount }} {{ item.currency }}</td>
+        <td>{{ item.status }}</td>
+        <td>
+          <button class="btn btn-info btn-sm" (click)="setMode('view', item.id)">View</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- 📝 New Membership Form -->
+<form *ngIf="mode === 'new'" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="card">
+    <div class="card-header">BlockRadiance Membership Registration</div>
+    <div class="card-body">
+      <div class="row g-3">
+        <div class="col-md-3">
+          <label>Country</label>
+          <select class="form-control" formControlName="countryId" (change)="onCountryChange($event)">
+            <option *ngFor="let c of countryList" [value]="c.id">{{ c.name }}</option>
+          </select>
+        </div>
+
+        <div class="col-md-3">
+          <label>Subscription Type</label>
+          <select class="form-control" formControlName="subscriptionId" (change)="onSubscriptionChange($event)">
+            <option value="">Select</option>
+            <option *ngFor="let s of subscriptionList" [value]="s.id">{{ s.name }}</option>
+          </select>
+        </div>
+
+        <div class="col-md-3">
+          <label>Business Partner</label>
+          <select class="form-control" formControlName="companyId">
+            <option *ngFor="let p of partnerList" [value]="p.id">{{ p.name }}</option>
+          </select>
+        </div>
+
+        <div class="col-md-2">
+          <label>Duration Unit</label>
+          <input type="text" class="form-control" formControlName="durationUnit" readonly />
+        </div>
+
+        <div class="col-md-1">
+          <label>Duration</label>
+          <input type="number" class="form-control" formControlName="duration" readonly />
+        </div>
+
+        <div class="col-md-12">
+          <label>Email Ids</label>
+          <textarea class="form-control" formControlName="personalEmailId"></textarea>
+        </div>
+
+        <div class="col-md-12">
+          <label>Email Subject</label>
+          <input class="form-control" formControlName="subject" />
+        </div>
+
+        <div class="col-md-12">
+          <label>Email Body</label>
+          <textarea class="form-control" formControlName="htmlBody" style="height:150px;"></textarea>
+        </div>
+      </div>
+      <div class="text-center mt-3">
+        <button class="btn btn-success" type="submit" [disabled]="form.invalid">Submit</button>
+      </div>
+    </div>
+  </div>
+</form>
+
+<!-- 🔍 Membership Details View -->
+<div *ngIf="mode === 'view' && selectedDetails" class="card">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <span>Membership Details</span>
+    <button class="btn btn-warning btn-sm" (click)="setMode('list')">Back</button>
+  </div>
+  <div class="card-body row g-3">
+    <div class="col-md-3"><strong>Membership ID:</strong> {{ selectedDetails.membershipId }}</div>
+    <div class="col-md-3"><strong>Plan:</strong> {{ selectedDetails.subscriptionType }}</div>
+    <div class="col-md-3"><strong>Duration:</strong> {{ selectedDetails.duration }} {{ selectedDetails.durationUnit }}</div>
+    <div class="col-md-3"><strong>Status:</strong> {{ selectedDetails.status }}</div>
+    <div class="col-md-6"><strong>Company:</strong> {{ selectedDetails.companyName }}</div>
+    <div class="col-md-6"><strong>Email:</strong> {{ selectedDetails.personalEmailId }}</div>
+    <div class="col-md-6"><strong>Membership Date:</strong> {{ selectedDetails.membershipDate }}</div>
+    <div class="col-md-6"><strong>Expiry Date:</strong> {{ selectedDetails.membershipExpiryDate }}</div>
+  </div>
+</div>

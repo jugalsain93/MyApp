@@ -1,0 +1,38 @@
+<!-- header.component.html -->
+<div class="header-bar fixed-top">
+  <!-- Left: User Welcome -->
+  <div class="header-left d-flex align-items-center">
+    <span class="welcome-text">Welcome, ABC</span>
+  </div>
+
+  <!-- Center: App Name -->
+  <div class="header-center">
+    <h5 class="mb-0 fw-semibold text-center"></h5>
+  </div>
+
+  <!-- Right: Profile + Logout -->
+  <div class="header-right">
+    <a
+      class="btn btn-sm btn-outline-primary me-2 d-flex align-items-center"
+      [routerLink]="'/user-profile'"
+      routerLinkActive="active"
+    >
+      <i class="bi bi-person-circle me-1"></i> Profile
+    </a>
+    <button class="btn btn-sm btn-outline-danger d-flex align-items-center" (click)="logout()">
+      <i class="bi bi-box-arrow-right me-1"></i> Logout
+    </button>
+  </div>
+</div>
+
+<!-- Optional: Secondary toolbar (Breadcrumb/Page Title) -->
+<!-- <div class="sub-header-bar d-none d-md-flex align-items-center px-3">
+  <span class="page-title">Dashboard</span>
+  <!-- Optional breadcrumb
+  <nav aria-label="breadcrumb" class="ms-3">
+    <ol class="breadcrumb mb-0">
+      <li class="breadcrumb-item"><a routerLink="/dashboard">Home</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+    </ol>
+  </nav> 
+</div> -->
